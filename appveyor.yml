@@ -25,7 +25,7 @@ environment:
   MySqlConnectionString: Server=localhost;Database=test;Uid=root;Pwd=Password12!
   OLEDBConnectionString: Provider=SQLOLEDB;Data Source=(local)\SQL2019;Initial Catalog=tempdb;User Id=sa;Password=Password12!
   PostgesConnectionString: Server=localhost;Port=5432;User Id=postgres;Password=Password12!;Database=test
-  SqlServerConnectionString: Server=(local)\SQL2019;Database=tempdb;User ID=sa;Password=Password12!
+  SqlServerConnectionString: Server=(local)\SQL2019;Database=tempdb;User ID=sa;Password=Password12!;TrustServerCertificate=True
 
 services:  
   - postgresql13

@@ -728,6 +728,10 @@ namespace Dapper.Contrib.Extensions
         /// The name of the table in the database
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The schema of the table in the database
+        /// </summary>
         public string Schema { get; set; }
     }
 
