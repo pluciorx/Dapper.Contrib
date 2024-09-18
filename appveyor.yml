@@ -32,9 +32,11 @@ services:
   - postgresql13
 
 init:
+  - ps: Start-Service MySQL80
   - git config --global core.autocrlf input
   - SET PATH=%POSTGRES_PATH%\bin;%MYSQL_PATH%\bin;%PATH%
   - net start MSSQL$SQL2019
+  
 
 nuget:
   disable_publish_on_pr: true
