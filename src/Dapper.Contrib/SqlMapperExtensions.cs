@@ -291,6 +291,13 @@ namespace Dapper.Contrib.Extensions
                 var tableAttrName =
                     type.GetCustomAttribute<TableAttribute>(false)?.Name
                     ?? (type.GetCustomAttributes(false).FirstOrDefault(attr => attr.GetType().Name == "TableAttribute") as dynamic)?.Name;
+                
+                var schemaAttrr = type.GetCustomAttribute<TableAttribute>(false)?.Schema;
+                
+                if (!string.IsNullOrEmpty(schemaAttrr))
+                {
+                    tableAttrName = $"{schemaAttrr}.{tableAttrName}";
+                }
 
                 if (tableAttrName != null)
                 {
@@ -710,15 +717,18 @@ namespace Dapper.Contrib.Extensions
         /// Creates a table mapping to a specific name for Dapper.Contrib commands
         /// </summary>
         /// <param name="tableName">The name of this table in the database.</param>
-        public TableAttribute(string tableName)
+        /// <param name="schema">The schema name of this table in the database</param>
+        public TableAttribute(string tableName, string schema = "")
         {
             Name = tableName;
+            Schema = schema;
         }
 
         /// <summary>
         /// The name of the table in the database
         /// </summary>
         public string Name { get; set; }
+        public string Schema { get; set; }
     }
 
     /// <summary>
