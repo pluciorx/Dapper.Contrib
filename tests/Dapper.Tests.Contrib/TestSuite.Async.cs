@@ -124,7 +124,7 @@ namespace Dapper.Tests.Contrib
                 var list2 = (await connection.QueryAsync<ObjectY>("select * from ObjectY").ConfigureAwait(false)).ToList();
                 Assert.Equal(list2.Count, originalyCount + 1);
                 o2 = await connection.GetAsync<ObjectY>(id).ConfigureAwait(false);
-                Assert.Equal(o2.ObjectYId, id);
+                Assert.Equal(id, o2.ObjectYId);
                 o2.Name = "Bar";
                 await connection.UpdateAsync(o2).ConfigureAwait(false);
                 o2 = await connection.GetAsync<ObjectY>(id).ConfigureAwait(false);
@@ -344,7 +344,7 @@ namespace Dapper.Tests.Contrib
                 var total = await connection.InsertAsync(helper(users)).ConfigureAwait(false);
                 Assert.Equal(numberOfEntities, total);
                 users = connection.Query<User>("select * from Users").ToList();
-                Assert.Equal(users.Count, numberOfEntities);
+                Assert.Equal(numberOfEntities, users.Count);
                 foreach (var user in users)
                 {
                     user.Name += " updated";
@@ -435,12 +435,12 @@ namespace Dapper.Tests.Contrib
                 Assert.Equal(new DateTime(2011, 07, 14), value1.DateValue.Value);
 
                 var value2 = await connection.GetAsync<INullableDate>(id2).ConfigureAwait(false);
-                Assert.True(value2.DateValue == null);
+                Assert.Null(value2.DateValue);
 
                 var value3 = await connection.GetAllAsync<INullableDate>().ConfigureAwait(false);
                 var valuesList = value3.ToList();
                 Assert.Equal(new DateTime(2011, 07, 14), valuesList[0].DateValue.Value);
-                Assert.True(valuesList[1].DateValue == null);
+                Assert.Null(valuesList[1].DateValue);
             }
         }
 

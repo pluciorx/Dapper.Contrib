@@ -186,7 +186,7 @@ namespace Dapper.Contrib.Extensions
 
             if (type.IsInterface)
             {
-                if (!(connection.Query(sql, dynParams).FirstOrDefault() is IDictionary<string, object> res))
+                if (connection.Query(sql, dynParams).FirstOrDefault() is not IDictionary<string, object> res)
                 {
                     return null;
                 }
@@ -305,7 +305,7 @@ namespace Dapper.Contrib.Extensions
                 else
                 {
                     name = type.Name + "s";
-                    if (type.IsInterface && name.StartsWith("I"))
+                    if (type.IsInterface && name.StartsWith('I'))
                         name = name.Substring(1);
                 }
             }
@@ -607,7 +607,7 @@ namespace Dapper.Contrib.Extensions
                 return (T)Activator.CreateInstance(generatedType);
             }
 
-            private static MethodInfo CreateIsDirtyProperty(TypeBuilder typeBuilder)
+            private static MethodBuilder CreateIsDirtyProperty(TypeBuilder typeBuilder)
             {
                 var propType = typeof(bool);
                 var field = typeBuilder.DefineField("_" + nameof(IProxy.IsDirty), propType, FieldAttributes.Private);
@@ -648,7 +648,7 @@ namespace Dapper.Contrib.Extensions
                 return currSetPropMthdBldr;
             }
 
-            private static void CreateProperty<T>(TypeBuilder typeBuilder, string propertyName, Type propType, MethodInfo setIsDirtyMethod, bool isIdentity)
+            private static void CreateProperty<T>(TypeBuilder typeBuilder, string propertyName, Type propType, MethodBuilder setIsDirtyMethod, bool isIdentity)
             {
                 //Define the field and the property 
                 var field = typeBuilder.DefineField("_" + propertyName, propType, FieldAttributes.Private);
