@@ -291,11 +291,11 @@ namespace Dapper.Contrib.Extensions
                     type.GetCustomAttribute<TableAttribute>(false)?.Name
                     ?? (type.GetCustomAttributes(false).FirstOrDefault(attr => attr.GetType().Name == "TableAttribute") as dynamic)?.Name;
                 
-                var schemaAttrr = type.GetCustomAttribute<TableAttribute>(false)?.Schema;
+                var tableAttrSchema = type.GetCustomAttribute<TableAttribute>(false)?.Schema;
                 
-                if (!string.IsNullOrEmpty(schemaAttrr))
+                if (!string.IsNullOrEmpty(tableAttrSchema))
                 {
-                    tableAttrName = $"{schemaAttrr}.{tableAttrName}";
+                    tableAttrName = $"{tableAttrSchema}.{tableAttrName}";
                 }
 
                 if (tableAttrName != null)
