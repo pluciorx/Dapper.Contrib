@@ -5,8 +5,6 @@ using System.Linq;
 using Dapper.Contrib.Extensions;
 using Xunit;
 
-using FactAttribute = Dapper.Tests.Contrib.SkippableFactAttribute;
-
 namespace Dapper.Tests.Contrib
 {
     [Table("ObjectX")]
@@ -389,9 +387,9 @@ namespace Dapper.Tests.Contrib
                 connection.DeleteAll<User>();
 
                 var total = connection.Insert(helper(users));
-                Assert.Equal(total, numberOfEntities);
+                Assert.Equal(numberOfEntities, total);
                 users = connection.Query<User>("select * from Users").ToList();
-                Assert.Equal(users.Count, numberOfEntities);
+                Assert.Equal(numberOfEntities, users.Count);
             }
         }
 
@@ -427,9 +425,9 @@ namespace Dapper.Tests.Contrib
                 connection.DeleteAll<User>();
 
                 var total = connection.Insert(helper(users));
-                Assert.Equal(total, numberOfEntities);
+                Assert.Equal(numberOfEntities, total);
                 users = connection.Query<User>("select * from Users").ToList();
-                Assert.Equal(users.Count, numberOfEntities);
+                Assert.Equal(numberOfEntities, users.Count);
                 foreach (var user in users)
                 {
                     user.Name += " updated";
@@ -461,7 +459,7 @@ namespace Dapper.Tests.Contrib
         private void DeleteHelper<T>(Func<IEnumerable<User>, T> helper)
             where T : class
         {
-            const int numberOfEntities = 10;
+            int numberOfEntities = 10;
 
             var users = new List<User>(numberOfEntities);
             for (var i = 0; i < numberOfEntities; i++)
@@ -472,14 +470,14 @@ namespace Dapper.Tests.Contrib
                 connection.DeleteAll<User>();
 
                 var total = connection.Insert(helper(users));
-                Assert.Equal(total, numberOfEntities);
+                Assert.Equal(numberOfEntities, total);
                 users = connection.Query<User>("select * from Users").ToList();
-                Assert.Equal(users.Count, numberOfEntities);
+                Assert.Equal(numberOfEntities, users.Count);
 
                 var usersToDelete = users.Take(10).ToList();
                 connection.Delete(helper(usersToDelete));
                 users = connection.Query<User>("select * from Users").ToList();
-                Assert.Equal(users.Count, numberOfEntities - 10);
+                Assert.Equal(numberOfEntities - 10, users.Count);
             }
         }
 
@@ -597,13 +595,13 @@ namespace Dapper.Tests.Contrib
                 connection.DeleteAll<User>();
 
                 var total = connection.Insert(users);
-                Assert.Equal(total, numberOfEntities);
+                Assert.Equal(numberOfEntities, total);
                 users = connection.GetAll<User>().ToList();
-                Assert.Equal(users.Count, numberOfEntities);
+                Assert.Equal(numberOfEntities, users.Count);
                 var iusers = connection.GetAll<IUser>().ToList();
-                Assert.Equal(iusers.Count, numberOfEntities);
+                Assert.Equal(numberOfEntities, iusers.Count);
                 for (var i = 0; i < numberOfEntities; i++)
-                    Assert.Equal(iusers[i].Age, i);
+                    Assert.Equal(i, iusers[i].Age);
             }
         }
 
