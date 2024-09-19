@@ -136,7 +136,7 @@ Dapper.Contrib makes use of some optional attributes:
 * `[Table("Tablename", Schema = "SchemaName")]` - use another table name instead of the (by default pluralized) name of the class, Schema can be optionally passed as well.
 
     ```csharp
-    [Table ("emps",Schema = "emp")]
+    [Table ("emps", Schema = "emp")]
     public class Employee
     {
         public int Id { get; set; }

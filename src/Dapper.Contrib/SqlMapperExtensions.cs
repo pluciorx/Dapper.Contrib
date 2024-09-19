@@ -1,16 +1,16 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Collections.Concurrent;
 using System.Reflection.Emit;
-
+using System.Text;
 using Dapper;
 
 namespace Dapper.Contrib.Extensions
 {
+
     /// <summary>
     /// The Dapper.Contrib extensions for Dapper
     /// </summary>
@@ -290,9 +290,9 @@ namespace Dapper.Contrib.Extensions
                 var tableAttrName =
                     type.GetCustomAttribute<TableAttribute>(false)?.Name
                     ?? (type.GetCustomAttributes(false).FirstOrDefault(attr => attr.GetType().Name == "TableAttribute") as dynamic)?.Name;
-                
+
                 var tableAttrSchema = type.GetCustomAttribute<TableAttribute>(false)?.Schema;
-                
+
                 if (!string.IsNullOrEmpty(tableAttrSchema))
                 {
                     tableAttrName = $"{tableAttrSchema}.{tableAttrName}";
